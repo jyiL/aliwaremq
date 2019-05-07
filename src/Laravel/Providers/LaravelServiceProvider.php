@@ -10,6 +10,7 @@ namespace Jyil\AliwareMQ\Laravel\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Jyil\AliwareMQ\AliyunCredentialsProvider;
+use Jyil\AliwareMQ\Commands\ReceiveCommand;
 
 class LaravelServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,7 @@ class LaravelServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                FooCommand::class,
+                ReceiveCommand::class,
             ]);
         }
     }

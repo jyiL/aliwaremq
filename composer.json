@@ -28,9 +28,6 @@
         }
     ],
     "extra": {
-        "branch-alias": {
-            "dev-master": "1.3-dev"
-        },
         "laravel": {
             "providers": [
                 "Jyil\\AliwareMQ\\Laravel\\Providers\\LaravelServiceProvider"
