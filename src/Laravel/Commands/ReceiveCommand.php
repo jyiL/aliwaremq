@@ -10,7 +10,7 @@ namespace Jyil\AliwareMQ\Commands;
 
 use Illuminate\Console\Command;
 
-class Receive extends Command
+class ReceiveCommand extends Command
 {
     /**
      * The name and signature of the console command.
