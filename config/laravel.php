@@ -14,7 +14,7 @@ return [
     'port' => 5672,
 
     // 资源隔离
-    'virtualHost' => env('ALIWARE_MQ_VIRTUAL_HOST', 'pht-mq'),
+    'virtualHost' => env('ALIWARE_MQ_VIRTUAL_HOST', 'test'),
 
     // 阿里云的accessKey
     'accessKey' => env('ALIWARE_MQ_ACCESS_KEY', '**'),

@@ -10,14 +10,14 @@ namespace Jyil\AliwareMQ\Commands;
 
 use Illuminate\Console\Command;
 
-class ReceiveCommand extends Command
+class Receive extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'aliwaremq:receive';
+    protected $signature = 'aliwaremq:receive {queue}';
 
     /**
      * The console command description.
@@ -43,6 +43,8 @@ class ReceiveCommand extends Command
      */
     public function handle()
     {
-        app('aliwaremq')->receive();
+        $queue = $this->argument('queue');
+
+        app('aliwaremq')->receive($queue);
     }
 }
