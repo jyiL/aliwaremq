@@ -76,4 +76,32 @@ Class ConnectionUtil
             $this->virtualHost, false
         );
     }
+
+    /**
+     * @param \PhpAmqpLib\Connection\AbstractConnection $connection
+     *
+     * @throws
+     */
+    public static function shutdown($connection)
+    {
+        $connection->close();
+    }
+
+    /**
+     * param \PhpAmqpLib\Connection\AbstractConnection $connection
+     *
+     * @throws
+     */
+    public static function cleanup_connection($connection)
+    {
+        // Connection might already be closed.
+        // Ignoring exceptions.
+        try {
+            if($connection !== null) {
+                $connection->close();
+            }
+        } catch (\ErrorException $e) {
+            echo $e->getMessage() . PHP_EOL;
+        }
+    }
 }
