@@ -143,11 +143,11 @@ class AliyunCredentialsProvider
                 ConnectionUtil::cleanup_connection($connection);
                 usleep(self::WAIT_BEFORE_RECONNECT_uS);
             } catch(\RuntimeException $e) {
-                echo "Runtime exception " . PHP_EOL;
+                echo "Runtime exception " . $e->getMessage(). PHP_EOL;
                 ConnectionUtil::cleanup_connection($connection);
                 usleep(self::WAIT_BEFORE_RECONNECT_uS);
             } catch(\ErrorException $e) {
-                echo "Error exception " . PHP_EOL;
+                echo "Error exception " . $e->getMessage() . PHP_EOL;
                 ConnectionUtil::cleanup_connection($connection);
                 usleep(self::WAIT_BEFORE_RECONNECT_uS);
             }
