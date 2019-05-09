@@ -10,7 +10,6 @@ namespace Jyil\AliwareMQ\Laravel\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Jyil\AliwareMQ\AliyunCredentialsProvider;
-use Jyil\AliwareMQ\Commands\ReceiveCommand;
 
 class LaravelServiceProvider extends ServiceProvider
 {
@@ -19,12 +18,6 @@ class LaravelServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../../config/laravel.php' => config_path('aliwaremq.php'),
         ]);
-
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                ReceiveCommand::class,
-            ]);
-        }
     }
 
     public function register()
