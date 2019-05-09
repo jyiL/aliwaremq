@@ -107,7 +107,8 @@ class AliyunCredentialsProvider
         while(true){
             try {
                 $connection = $connectionUtil->getConnection();
-                register_shutdown_function('shutdown', $connection);
+                
+                register_shutdown_function(array($connection, 'shutdown'));
 
                 $channel = $connection->channel();
 
