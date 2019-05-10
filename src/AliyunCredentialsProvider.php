@@ -97,8 +97,9 @@ class AliyunCredentialsProvider
      *
      * @param string $queue
      * @param string $consumerTag
+     * @param callable|null $callback
      */
-    public function receive($queue, $consumerTag = '')
+    public function receive($queue, $consumerTag = '', $callback = null)
     {
         $connectionUtil = $this->getConnectionUtil();
 
@@ -116,11 +117,13 @@ class AliyunCredentialsProvider
 
                 echo " [*] Waiting for messages. To exit press CTRL+C\n";
 
-                $callback = function ($msg) {
+                $callback = function ($msg) use ($callback) {
                     echo ' [x] Received ', $msg->body, "\n";
 
                     // 手动确认消息    参数1：该消息的index
                     $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+
+                    if ($callback !== null) $callback();
                 };
 
                 // In order to defeat that we can use the basic_qos method with the prefetch_count = 1 setting.
