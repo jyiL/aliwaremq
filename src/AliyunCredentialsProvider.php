@@ -45,6 +45,8 @@ class AliyunCredentialsProvider
      * @param string $queue
      * @param string $message
      * @param string $exchange
+     *
+     * @return boolean
      */
     public function send($queue, $message, $exchange = '')
     {
@@ -52,44 +54,51 @@ class AliyunCredentialsProvider
 
         $connection = $connectionUtil->getConnection();
 
-        $channel = $connection->channel();
+        try {
+            $channel = $connection->channel();
 
-        $channel->set_ack_handler(
-            function (AMQPMessage $message) {
+            $channel->set_ack_handler(
+                function (AMQPMessage $message) {
 //                echo "Message acked with content " . $message->body . PHP_EOL;
-            }
-        );
-        $channel->set_nack_handler(
-            function (AMQPMessage $message) {
+                }
+            );
+            $channel->set_nack_handler(
+                function (AMQPMessage $message) {
 //                echo "Message nacked with content " . $message->body . PHP_EOL;
-            }
-        );
+                }
+            );
 
-        /*
-         * bring the channel into publish confirm mode.
-         * if you would call $ch->tx_select() before or after you brought the channel into this mode
-         * the next call to $ch->wait() would result in an exception as the publish confirm mode and transactions
-         * are mutually exclusive
-         */
-        $channel->confirm_select();
+            /*
+             * bring the channel into publish confirm mode.
+             * if you would call $ch->tx_select() before or after you brought the channel into this mode
+             * the next call to $ch->wait() would result in an exception as the publish confirm mode and transactions
+             * are mutually exclusive
+             */
+            $channel->confirm_select();
 
-        $channel->queue_declare($queue, $this->passive, $this->durable, $this->exclusive, $this->autoDelete);
+            $channel->queue_declare($queue, $this->passive, $this->durable, $this->exclusive, $this->autoDelete);
 
-        $msg = new AMQPMessage($message, array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT));
+            $msg = new AMQPMessage($message, array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT));
 
-        $channel->basic_publish($msg, $exchange, $queue);
+            $channel->basic_publish($msg, $exchange, $queue);
 
-        /*
-         * watching the amqp debug output you can see that the server will ack the message with delivery tag 1 and the
-         * multiple flag probably set to false
-         */
-        $channel->wait_for_pending_acks();
+            /*
+             * watching the amqp debug output you can see that the server will ack the message with delivery tag 1 and the
+             * multiple flag probably set to false
+             */
+            $channel->wait_for_pending_acks();
 
 //        echo " [x] Sent 'Hello World!'\n";
 
-        $channel->close();
+            $channel->close();
 
-        $connection->close();
+            $connection->close();
+
+            return true;
+        } catch (\Exception $e) {
+            echo 'Exception ' . $e->getMessage();
+            return false;
+        }
     }
 
     /**
