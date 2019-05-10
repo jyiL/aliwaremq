@@ -127,12 +127,12 @@ class AliyunCredentialsProvider
                 echo " [*] Waiting for messages. To exit press CTRL+C\n";
 
                 $callback = function ($msg) use ($callback) {
-                    echo ' [x] Received ', $msg->body, "\n";
+//                    echo ' [x] Received ', $msg->body, "\n";
 
                     // 手动确认消息    参数1：该消息的index
                     $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
 
-                    if ($callback !== null) $callback();
+                    if ($callback !== null) $callback($msg->body);
                 };
 
                 // In order to defeat that we can use the basic_qos method with the prefetch_count = 1 setting.
