@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/jyil/aliwaremq/v/stable)](https://packagist.org/packages/jyil/aliwaremq)
 [![Total Downloads](https://poser.pugx.org/jyil/aliwaremq/downloads)](https://packagist.org/packages/jyil/aliwaremq)
 [![License](https://poser.pugx.org/jyil/aliwaremq/license)](https://packagist.org/packages/jyil/aliwaremq)
+[![Build Status](https://api.travis-ci.org/jyiL/aliwaremq.svg?branch=master)](https://travis-ci.org/jyiL/aliwaremq)
 
 
 ### Support
