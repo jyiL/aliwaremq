@@ -7,7 +7,7 @@
 
 ### Support
 
-- [x] laravel
+- [x] [Laravel](https://jyil.github.io/laravel-aliwaremq/)
 
 ### Composer
     composer require jyil/aliwaremq
