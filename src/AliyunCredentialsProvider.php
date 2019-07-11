@@ -45,10 +45,11 @@ class AliyunCredentialsProvider
      * @param string $queue
      * @param string $message
      * @param string $exchange
+     * @param string $exchangeType
      *
      * @return boolean
      */
-    public function send($queue, $message, $exchange = '')
+    public function send($queue, $message, $exchange = '', $exchangeType = 'fanout')
     {
         $connectionUtil = $this->getConnectionUtil();
 
@@ -77,6 +78,8 @@ class AliyunCredentialsProvider
             $channel->confirm_select();
 
             $channel->queue_declare($queue, $this->passive, $this->durable, $this->exclusive, $this->autoDelete);
+
+            if (!empty($exchange)) $channel->exchange_declare($exchange, $exchangeType, $this->passive, $this->durable, $this->autoDelete);
 
             $msg = new AMQPMessage($message, array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT));
 
@@ -107,8 +110,10 @@ class AliyunCredentialsProvider
      * @param string $queue
      * @param string $consumerTag
      * @param callable|null $callback
+     * @param string $exchange
+     * @param string $exchangeType
      */
-    public function receive($queue, $consumerTag = '', $callback = null)
+    public function receive($queue, $consumerTag = '', $callback = null, $exchange = '', $exchangeType = 'fanout')
     {
         $connectionUtil = $this->getConnectionUtil();
 
@@ -125,6 +130,12 @@ class AliyunCredentialsProvider
                 $channel->queue_declare($queue, $this->passive, $this->durable, $this->exclusive, $this->autoDelete);
 
                 echo " [*] Waiting for messages. To exit press CTRL+C\n";
+
+                if (!empty($exchange)) {
+                    $channel->exchange_declare($exchange, $exchangeType, $this->passive, $this->durable, $this->autoDelete);
+
+                    $channel->queue_bind($queue, $exchange);
+                }
 
                 $callback = function ($msg) use ($callback) {
 //                    echo ' [x] Received ', $msg->body, "\n";
