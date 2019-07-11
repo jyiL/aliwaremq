@@ -23,7 +23,19 @@
         'resourceOwnerId' => '*',
     ]);
     
+    // send
     $provider->send('queue', 'Hello World');
+    
+    $provider->send('queue', 'Hello World', 'exchange', 'exchangeType');
+    
+    // receive
+    app('aliwaremq')->receive('queue', '', function ($msgBody) {
+        echo 'body---' . $msgBody;
+    });
+    
+    app('aliwaremq')->receive('queue', '', function ($msgBody) {
+        echo 'body---' . $msgBody;
+    }, 'exchange', 'exchangeType');
     
 ### License
 
