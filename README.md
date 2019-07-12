@@ -29,11 +29,11 @@
     $provider->send('queue', 'Hello World', 'exchange', 'exchangeType');
     
     // receive
-    app('aliwaremq')->receive('queue', '', function ($msgBody) {
+    $provider->receive('queue', '', function ($msgBody) {
         echo 'body---' . $msgBody;
     });
     
-    app('aliwaremq')->receive('queue', '', function ($msgBody) {
+    $provider->receive('queue', '', function ($msgBody) {
         echo 'body---' . $msgBody;
     }, 'exchange', 'exchangeType');
     
