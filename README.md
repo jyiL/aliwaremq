@@ -8,8 +8,8 @@
 
 ### Support
 
-- [x] [Laravel(中文文档)](https://jyil.github.io/laravel-aliwaremq/)
-- [x] [Lumen(中文文档)](#)
+- [x] [Laravel(中文文档)](https://github.com/jyiL/aliwaremq/wiki/Laravel-%E6%96%87%E6%A1%A3)
+- [x] [Lumen(中文文档)](https://github.com/jyiL/aliwaremq/wiki/Lumen-%E6%96%87%E6%A1%A3)
 
 ### Composer
     composer require jyil/aliwaremq
